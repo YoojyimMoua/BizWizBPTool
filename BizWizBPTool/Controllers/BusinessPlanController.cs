@@ -21,10 +21,10 @@ namespace BizWizBPTool.Controllers
             return Ok(await _businessPlanRepository.GetAllAsync());
         }
 
-        [HttpGet("{PlanId}")]
-        public async Task<ActionResult<BusinessPlan>> GetByIdAsync(int PlanId)
+        [HttpGet("{planId}")]
+        public async Task<ActionResult<BusinessPlan>> GetByIdAsync(int planId)
         {
-            var businessPlan = await _businessPlanRepository.GetByIdAsync(PlanId);
+            var businessPlan = await _businessPlanRepository.GetByIdAsync(planId);
             if (businessPlan == null)
             {
                 return NotFound();
@@ -36,7 +36,25 @@ namespace BizWizBPTool.Controllers
         public async Task<ActionResult<BusinessPlan>> CreateBusinessPlan(BusinessPlan businessPlan)
         {
             await _businessPlanRepository.AddBusinessPlanAsync(businessPlan);
-            return Created();
+            return CreatedAtAction(nameof(GetByIdAsync), new {planId = businessPlan.PlanId}, businessPlan);
+        }
+
+        [HttpDelete("{planId}")]
+        public async Task<ActionResult> DeleteBusinessPlanById(int planId)
+        {
+            await _businessPlanRepository.DeleteBusinessPlanAsync(planId);
+            return NoContent();
+        }
+
+        [HttpPut("{planId}")]
+        public async Task<ActionResult<BusinessPlan>> UpdateBusinessPlan(int planId, BusinessPlan businessPlan)
+        {
+            if (planId != businessPlan.PlanId)
+            {
+                return BadRequest();
+            }
+            await _businessPlanRepository.UpdateBusinessPlanAsync(businessPlan);
+            return CreatedAtAction(nameof(GetByIdAsync), new { planId = businessPlan.PlanId }, businessPlan);
         }
     }
 }

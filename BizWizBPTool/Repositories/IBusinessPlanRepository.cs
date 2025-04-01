@@ -6,12 +6,12 @@ namespace BizWizBPTool.Repositories
     {
         Task<IEnumerable<BusinessPlan>> GetAllAsync();
 
-        Task<BusinessPlan?> GetByIdAsync(int PlanId);
+        Task<BusinessPlan?> GetByIdAsync(int planId);
 
         Task AddBusinessPlanAsync(BusinessPlan businessPlan);
 
         Task UpdateBusinessPlanAsync(BusinessPlan businessPlan);
 
-        Task DeleteBusinessPlanAsync(int PlanId);
+        Task DeleteBusinessPlanAsync(int planId);
     }
 }

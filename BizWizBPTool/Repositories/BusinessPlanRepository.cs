@@ -17,13 +17,13 @@ namespace BizWizBPTool.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteBusinessPlanAsync(int PlanId)
+        public async Task DeleteBusinessPlanAsync(int planId)
         {
-            var businessPlanInDb = await _context.BusinessPlans.FindAsync(PlanId);
+            var businessPlanInDb = await _context.BusinessPlans.FindAsync(planId);
 
             if (businessPlanInDb == null)
             {
-                throw new KeyNotFoundException($"Business Plan with id {PlanId} was not found.");
+                throw new KeyNotFoundException($"Business Plan with id {planId} was not found.");
             }
 
             _context.BusinessPlans.Remove(businessPlanInDb);
@@ -35,9 +35,9 @@ namespace BizWizBPTool.Repositories
             return await _context.BusinessPlans.ToListAsync();
         }
 
-        public async Task<BusinessPlan?> GetByIdAsync(int PlanId)
+        public async Task<BusinessPlan?> GetByIdAsync(int planId)
         {
-            return await _context.BusinessPlans.FindAsync(PlanId);
+            return await _context.BusinessPlans.FindAsync(planId);
         }
 
         public async Task UpdateBusinessPlanAsync(BusinessPlan businessPlan)
