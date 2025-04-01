@@ -22,7 +22,7 @@ namespace BizWizBPTool.Controllers
         }
 
         [HttpGet("{planId}")]
-        public async Task<ActionResult<BusinessPlan>> GetByIdAsync(int planId)
+        public async Task<ActionResult<BusinessPlan>> GetBusinessPlanById(int planId)
         {
             var businessPlan = await _businessPlanRepository.GetByIdAsync(planId);
             if (businessPlan == null)
@@ -36,7 +36,7 @@ namespace BizWizBPTool.Controllers
         public async Task<ActionResult<BusinessPlan>> CreateBusinessPlan(BusinessPlan businessPlan)
         {
             await _businessPlanRepository.AddBusinessPlanAsync(businessPlan);
-            return CreatedAtAction(nameof(GetByIdAsync), new {planId = businessPlan.PlanId}, businessPlan);
+            return CreatedAtAction(nameof(GetBusinessPlanById), new {planId = businessPlan.PlanId}, businessPlan);
         }
 
         [HttpDelete("{planId}")]
@@ -54,7 +54,7 @@ namespace BizWizBPTool.Controllers
                 return BadRequest();
             }
             await _businessPlanRepository.UpdateBusinessPlanAsync(businessPlan);
-            return CreatedAtAction(nameof(GetByIdAsync), new { planId = businessPlan.PlanId }, businessPlan);
+            return CreatedAtAction(nameof(GetBusinessPlanById), new { planId = businessPlan.PlanId }, businessPlan);
         }
     }
 }
