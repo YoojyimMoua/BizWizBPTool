@@ -14,6 +14,9 @@ namespace BizWizBPTool
             builder.Services.AddDbContext<AppDbContext>(
                 options => options.UseInMemoryDatabase("BusinessPlanDb")
                 );
+            builder.Services.AddDbContext<AppDbContext>(
+                options => options.UseInMemoryDatabase("UserDb")
+                );
 
             builder.Services.AddCors(options =>
             {
@@ -27,6 +30,7 @@ namespace BizWizBPTool
 
             // add the business plan repo to the dependency injection
             builder.Services.AddScoped<IBusinessPlanRepository, BusinessPlanRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddControllers();
 
