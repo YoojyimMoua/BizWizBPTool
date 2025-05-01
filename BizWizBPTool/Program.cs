@@ -2,6 +2,9 @@ using BizWizBPTool.Data;
 using BizWizBPTool.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.InMemory;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace BizWizBPTool
 {
@@ -34,6 +37,23 @@ namespace BizWizBPTool
 
             builder.Services.AddControllers();
 
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "yourapp",
+            ValidAudience = "yourapp",
+
+            
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MyUltraSuperSecureJwtKey12345678!@#$")) // Replace with a secure key
+                };
+                });
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -50,6 +70,9 @@ namespace BizWizBPTool
             }
 
             app.UseCors("MyCors");
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
 

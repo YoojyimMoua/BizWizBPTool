@@ -14,6 +14,7 @@ namespace BizWizBPTool.Models
         public string MarketResearch { get; set; }
         public string ServiceLine { get; set; }
         public string MarketingAndSales { get; set; }
+        public DateOnly? Deadline { get; set; }
         
     }
 }

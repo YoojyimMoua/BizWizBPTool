@@ -1,16 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BizWizBPTool.Models
+namespace BizWizBPTool.DTOs
 {
-    public class User
+    public class LoginRequest
     {
-        [Key]
-        public int UserId { get; set; }
-
-        [Required]
-        [StringLength(50, MinimumLength = 3)]
-        public string Username { get; set; }
-
         [Required]
         [EmailAddress]
         public string Email { get; set; }
@@ -19,4 +12,5 @@ namespace BizWizBPTool.Models
         [StringLength(100, MinimumLength = 6)]
         public string Password { get; set; }
     }
+
 }
