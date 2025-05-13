@@ -65,23 +65,23 @@ namespace BizWizBPTool.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(User user)
         {
-            // Check if the email is already registered
+            
             var existingUser = await _userRepository.GetByEmailAsync(user.Email);
             if (existingUser != null)
             {
                 return BadRequest("Email is already registered.");
             }
 
-            // Hash the password
+            
             user.Password = HashPassword(user.Password);
 
-            // Save the user
+            
             await _userRepository.AddUserAsync(user);
 
             return CreatedAtAction(nameof(GetUserById), new { userId = user.UserId }, user);
         }
 
-        // Helper method to hash passwords
+        
         private string HashPassword(string password)
         {
             using var sha256 = System.Security.Cryptography.SHA256.Create();
@@ -93,26 +93,26 @@ namespace BizWizBPTool.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login([FromBody] LoginRequest loginRequest)
         {
-            // Check if the user exists
+            
             var user = await _userRepository.GetByEmailAsync(loginRequest.Email);
             if (user == null)
             {
                 return Unauthorized("Invalid email or password.");
             }
 
-            // Verify the password
+            
             if (!VerifyPassword(loginRequest.Password, user.Password))
             {
                 return Unauthorized("Invalid email or password.");
             }
 
-            // Generate JWT token
+            
             var token = GenerateJwtToken(user);
 
             return Ok(new { token });
         }
 
-        // Helper method to verify the password
+        
         private bool VerifyPassword(string password, string hashedPassword)
         {
             using var sha256 = System.Security.Cryptography.SHA256.Create();
@@ -122,7 +122,7 @@ namespace BizWizBPTool.Controllers
             return hashedInput == hashedPassword;
         }
 
-        // Helper method to generate JWT token
+        
         private string GenerateJwtToken(User user)
         {
             var claims = new[]
@@ -132,7 +132,7 @@ namespace BizWizBPTool.Controllers
         new Claim(ClaimTypes.Email, user.Email)
     };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MyUltraSuperSecureJwtKey12345678!@#")); // Replace with a secure key
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MyUltraSuperSecureJwtKey12345678!@#")); 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(

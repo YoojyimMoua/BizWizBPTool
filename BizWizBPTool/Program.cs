@@ -31,7 +31,7 @@ namespace BizWizBPTool
                 }); 
             });
 
-            // add the business plan repo to the dependency injection
+            
             builder.Services.AddScoped<IBusinessPlanRepository, BusinessPlanRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
@@ -50,7 +50,7 @@ namespace BizWizBPTool
             ValidAudience = "yourapp",
 
             
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MyUltraSuperSecureJwtKey12345678!@#$")) // Replace with a secure key
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MyUltraSuperSecureJwtKey12345678!@#$")) 
                 };
                 });
 
